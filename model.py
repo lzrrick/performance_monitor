@@ -29,7 +29,7 @@ class model():
             return "No GPU detected!"
         info = ""
         for index, gpu in enumerate(self.gpu_list):
-            info += f"{gpu[0]}   {gpu[1]}%  {gpu[2]}℃\n显存 {gpu[3]}/{gpu[4]}GB {gpu[5]}%"
+            info += f"GPU {gpu[0]}   {gpu[1]}%   {gpu[2]}℃\n显存 {gpu[3]}/{gpu[4]}GB {gpu[5]}%"
             if index != len(self.gpu_list):
                 info += "\n"
         return info

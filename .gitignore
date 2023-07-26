@@ -1,6 +1,11 @@
 /__pycache__
 /build
-*.spec
-build.bat
+/dist/start.py
+start.
 test.py
+myUi.ui
+run.bat
+build.bat
+*.spec
+
 # git rm -r --cached .

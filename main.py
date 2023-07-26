@@ -1,12 +1,12 @@
 import sys
 import os
 import atexit
+import win32api
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from myUi import Ui_MainWindow
 from model import model
-import win32api
 
 
 class Singnals(QThread):
