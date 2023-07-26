@@ -2,3 +2,5 @@
 /build
 *.spec
 build.bat
+test.py
+# git rm -r --cached .

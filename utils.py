@@ -86,16 +86,19 @@ def getGPUs():
 
 def get_gpu_info():
     gpulist = []
-
-    for gpu in getGPUs():
-        gpu_util = round(gpu.load * 100, 2)
-        gpu_memory_total = round((gpu.memoryTotal) / 1024, 2)
-        gpu_memory_used = round((gpu.memoryUsed) / 1024, 2)
-        gpu_memory_util = round((gpu.memoryUtil) * 100, 2)
-        gpulist.append(
-            [gpu.id, gpu_util,  gpu_memory_used, gpu_memory_total, gpu_memory_util])
-        # print(
-        #     f"GPU:{gpu.id} {gpu_memory_total}G {gpu_memory_used}G {gpu_memory_util}%")
+    try:
+        for gpu in getGPUs():
+            gpu_util = round(gpu.load * 100, 2)
+            gpu_temperature = gpu.temperature
+            gpu_memory_total = round((gpu.memoryTotal) / 1024, 2)
+            gpu_memory_used = round((gpu.memoryUsed) / 1024, 2)
+            gpu_memory_util = round((gpu.memoryUtil) * 100, 2)
+            gpulist.append(
+                [gpu.id, gpu_util, gpu_temperature,  gpu_memory_used, gpu_memory_total, gpu_memory_util])
+            # print(
+            #     f"GPU:{gpu.id} {gpu_memory_total}G {gpu_memory_used}G {gpu_memory_util}%")
+    except Exception as e:
+        print(e)
     return gpulist
 
 
@@ -138,13 +141,14 @@ def get_disk_info():
 
 
 if __name__ == "__main__":
-    while True:
-        get_cpu_info()
-        print("---------------")
-        get_memory_info()
-        print("---------------")
-        get_gpu_info()
-        print("---------------")
-        get_disk_info()
-        print("---------------")
-        break
+    print(getGPUs()[0].name)
+    # while True:
+    #     get_cpu_info()
+    #     print("---------------")
+    #     get_memory_info()
+    #     print("---------------")
+    #     get_gpu_info()
+    #     print("---------------")
+    #     get_disk_info()
+    #     print("---------------")
+    #     break

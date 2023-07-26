@@ -1,10 +1,12 @@
 import sys
 import os
+import atexit
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from myUi import Ui_MainWindow
 from model import model
+import win32api
 
 
 class Singnals(QThread):
@@ -64,8 +66,24 @@ class Main(QMainWindow):
         self.ui.disk.setText(self.data.get_disk_info())
 
 
+def remove_start(is_host):
+    if is_host:
+        os.remove("start.py")
+
+
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Main()
-    window.show()
-    sys.exit(app.exec())
+    try:
+        if os.path.exists("start.py"):
+            atexit.register(remove_start, False)
+            win32api.MessageBox(0, "monitor is running!",
+                                "warning", 0x00000000 + 0x00000030)
+        else:
+            atexit.register(remove_start, True)
+            open("start.py", "w")
+            app = QApplication(sys.argv)
+            window = Main()
+            window.show()
+            sys.exit(app.exec())
+
+    except Exception as e:
+        print(e)
