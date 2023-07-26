@@ -1,1 +1,4 @@
-build/
+/_pycache_
+/build
+*.spec
+build.bat

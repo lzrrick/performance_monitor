@@ -58,10 +58,6 @@ class Main(QMainWindow):
 
     def update_data(self):
         self.data.update()
-        # self.ui.gpu.setText(str(time.localtime().tm_sec))
-        # self.ui.cpu.setText(str(time.localtime().tm_sec+1))
-        # self.ui.memory.setText(str(time.localtime().tm_sec+2))
-        # self.ui.disk.setText(str(time.localtime().tm_sec+3))
         self.ui.gpu.setText(self.data.get_gpu_info())
         self.ui.cpu.setText(self.data.get_cpu_info())
         self.ui.memory.setText(self.data.get_memory_info())
