@@ -1,7 +1,7 @@
 /__pycache__
 /build
-/dist/start.py
-start.
+/dist/start.pid
+start.pid
 test.py
 myUi.ui
 run.bat

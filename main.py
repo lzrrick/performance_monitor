@@ -7,6 +7,7 @@ from PySide6.QtGui import *
 from PySide6.QtCore import *
 from myUi import Ui_MainWindow
 from model import model
+import psutil
 
 
 class Singnals(QThread):
@@ -66,24 +67,31 @@ class Main(QMainWindow):
         self.ui.disk.setText(self.data.get_disk_info())
 
 
-def remove_start(is_host):
-    if is_host:
-        os.remove("start.py")
+def remove_start():
+    os.remove("start.pid")
 
 
 if __name__ == "__main__":
     try:
-        if os.path.exists("start.py"):
-            atexit.register(remove_start, False)
-            win32api.MessageBox(0, "monitor is running!",
-                                "warning", 0x00000000 + 0x00000030)
-        else:
-            atexit.register(remove_start, True)
-            open("start.py", "w")
-            app = QApplication(sys.argv)
-            window = Main()
-            window.show()
-            sys.exit(app.exec())
+        if os.path.exists("start.pid"):
+            f = open("start.pid", "r")
+            pid = int(f.read())
+            f.close()
+            if psutil.pid_exists(pid):
+                win32api.MessageBox(0, "monitor is running!",
+                                    "warning", 0x00000000 + 0x00000030)
+                sys.exit()
+            else:
+                remove_start()
 
+        atexit.register(remove_start)
+        f = open("start.pid", "w")
+        f.write(f"{os.getpid()}")
+        f.close()
+        win32api.SetFileAttributes("start.pid", 0x00000002)  # hide file
+        app = QApplication(sys.argv)
+        window = Main()
+        window.show()
+        sys.exit(app.exec())
     except Exception as e:
         print(e)
